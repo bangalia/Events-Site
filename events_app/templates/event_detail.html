@@ -9,47 +9,24 @@
     correct title, description, date, time, and number of guests
 -->
 
-<h1>Zoom Party!</h1>
 
-<p>Come join us for some fun zoom games!</p>
-
-<p><strong>Date:</strong> Friday March 5, 2021</p>
-<p><strong>Time:</strong> 5:00 PM</p>
-
-<p><strong>Number of Guests:</strong> 5</p>
-
-<form method="POST">
+<form method="POST" action="{{ url_for('main.event_detail', book_id=book.id) }}">
+    {{ form.csrf_token }}
     <fieldset>
-        <legend>RSVP</legend>
-        <p>
-            <label>
-                Your Name:
-                <input type="text" name="guest_name">
-            </label>
-        </p>
-        <p>
-            <label>
-                <input type="checkbox" name="returning" onchange="returningGuestChanged(this.checked)">
-                Returning Guest?
-            </label>
-        </p>
-        <div id="new-guest-info">
-            <p>
-                <label>
-                    Your Email Address:
-                    <input type="email" name="email">
-                </label>
-            </p>
-            <p>
-                <label>
-                    Your Phone Number:
-                    <input type="phone" name="phone">
-                </label>
-            </p>
-        </div>
-        <p>
-            <input type="submit" name="submit" value="Add">
-        </p>
+      {{ form.description.label }}
+      {{ form.description }}
+
+      {{ form.date.label }}
+      {{ form.date }}
+
+      {{ form.time.label }}
+      {{ form.time }}
+
+     {{ form.guests.label }}
+     {{ form.guests }}
+
+     {{ form.submit }}
+        
     </fieldset>
 </form>
 
