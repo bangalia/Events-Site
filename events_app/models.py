@@ -13,7 +13,7 @@ class Guest(db.Model):
     name = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(80), nullable=False)
     phone = db.Column(db.String(80), nullable=False)
-    event = db.relationship('Event' secondary="events_attending", backpopulates='books')
+    events_attending = db.relationship('Event', secondary='guest_event_table', backpopulates='books')
 # TODO: Create a model called `Event` with the following fields:
 # - id: primary key
 # - title: String column
