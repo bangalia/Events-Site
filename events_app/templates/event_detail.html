@@ -4,29 +4,38 @@
 
 <a href="/">Home</a>
 
-<!-- 
-    TODO: Instead of the hard-coded values, use the event object to display the
-    correct title, description, date, time, and number of guests
--->
+<h1>{{event.title</h1>
+
+<p>{{event.description}}</p>
+
+<p>Date: {{date}}</p>
+<p>Time: {{time}}</p>
+
+<p>Number of Guests: {{num_of_guests}}</p>
 
 
-<form method="POST" action="{{ url_for('main.event_detail', book_id=book.id) }}">
-    {{ form.csrf_token }}
+<form method="POST">
     <fieldset>
-      {{ form.description.label }}
-      {{ form.description }}
-
-      {{ form.date.label }}
-      {{ form.date }}
-
-      {{ form.time.label }}
-      {{ form.time }}
-
-     {{ form.guests.label }}
-     {{ form.guests }}
-
-     {{ form.submit }}
-        
+     <legend>RSVP</legend>
+        <p>
+            <label>Full Name:
+                <input type="text" name="guest_name">
+            </label>
+        </p>
+        <p>
+            <label>Email:
+               <input type="email" name="email"> 
+            </label>
+        </p>
+        <p>
+            <label>
+                Phone Number:
+                <input type="text" name="phone">
+            </label>
+        </p>
+        <p>
+            <input type="submit" name="submit" value="Add">
+        </p>
     </fieldset>
 </form>
 
@@ -34,11 +43,9 @@
 
 <h2>Guests Attending:</h2>
 <ul>
-    
-    <li><a href="/guest/1">Meredith</a></li>
-    <li><a href="/guest/2">Dani</a></li>
-    <li><a href="/guest/3">Jordan</a></li>
-    <li><a href="/guest/4">Ducky</a></li>
+    {% for guest in event.guests %}
+    <li><a href="/guest/{{guest.id}}">{{guest.name}}</a></li>
+    {% endfor%}
 </ul>
 
 {% endblock %}
