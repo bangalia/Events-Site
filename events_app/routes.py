@@ -17,16 +17,14 @@ main = Blueprint('main', __name__)
 @main.route('/')
 def index():
     """Show upcoming events to users!"""
-    context = {
-        'events': Event.query.all()
-    }
-    return render_template('index.html')
+
+    return render_template('index.html',events=Event.query.all())
 
 
 @main.route('/event/<event_id>', methods=['GET'])
 def event_detail(event_id):
     """Show a single event."""
- event = Event.query.filter_by(id=event_id).one()
+    event = Event.query.filter_by(id=event_id).one()
 
     num_of_guests = 0
     for guest in event.guests:
@@ -40,13 +38,13 @@ def event_detail(event_id):
         'time': '',
         'num_of_guests': num_of_guests
     }
-    return render_template('event_detail.html')
+    return render_template('event_detail.html', event=event, num_of_guests=num_of_guests)
 
 
 @main.route('/event/<event_id>', methods=['POST'])
 def rsvp(event_id):
     """RSVP to an event."""
-   
+    event = Event.query.filter_by(id=event_id).one()
     is_returning_guest = request.form.get('returning')
     guest_name = request.form.get('guest_name')
 
@@ -92,7 +90,7 @@ def create():
             print('there was an error: incorrect datetime format')
 
        
-        new_event = Event(title=new_event_title, description=new_event_description, date_and_time=f"{date} {time}")
+        new_event = Event(title=new_event_title, description=new_event_description, date_and_time=date_and_time)
 
         db.session.add(new_event)
         db.session.commit()
@@ -105,7 +103,5 @@ def create():
 
 @main.route('/guest/<guest_id>')
 def guest_detail(guest_id):
-     context = {
-        'guest': Guest.query.filter_by(id=guest_id).one()
-    }
-    return render_template('guest_detail.html')
+    
+    return render_template('guest_detail.html', guest=Guest.query.filter_by(id=guest_id).one())
